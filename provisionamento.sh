@@ -1,54 +1,38 @@
 #!/bin/bash
 
-# Criar diretórios
-mkdir /publico
-mkdir /adm
-mkdir /ven
-mkdir /sec
+#Criar pastas publico, adm, ven, sec
+sudo mkdir /publico
+sudo mkdir /adm
+sudo mkdir /ven
+sudo mkdir /sec
 
-# Criar grupos
-groupadd GRP_ADM
-groupadd GRP_VEN
-groupadd GRP_SEC
+#Criar grupos GRP_ADM, GRP_VEN, GRP_SEC
+sudo groupadd GRP_ADM
+sudo groupadd GRP_VEN
+sudo groupadd GRP_SEC
 
-# Criar usuários
-useradd -m carlos
-useradd -m maria
-useradd -m joao
-useradd -m debora
-useradd -m sebastiana
-useradd -m roberto
-useradd -m josefina
-useradd -m amanda
-useradd -m rogerio
+#Criar usuários no grupo GRP_ADM
+sudo useradd carlos -c "Carlos da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_ADM
+sudo useradd maria -c "Maria da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_ADM
+sudo useradd joao -c "Joao da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_ADM
 
-# Adicionar usuários aos grupos
-usermod -aG GRP_ADM carlos
-usermod -aG GRP_ADM maria
-usermod -aG GRP_ADM joao
-usermod -aG GRP_VEN debora
-usermod -aG GRP_VEN sebastiana
-usermod -aG GRP_VEN roberto
-usermod -aG GRP_SEC josefina
-usermod -aG GRP_SEC amanda
-usermod -aG GRP_SEC rogerio
+#Criar usuários no grupo GRP_VEN
+sudo useradd debora -c "Debora da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_VEN
+sudo useradd sebastiana -c "Sebastiana da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_VEN
+sudo useradd roberto -c "Roberto da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_VEN
 
-# Definir dono dos diretórios
-chown root:root /publico /adm /ven /sec
+#Criar usuários no grupo GRP_SEC
+sudo useradd josefina -c "Josefina da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_SEC
+sudo useradd amanda -c "Amanda da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_SEC
+sudo useradd rogerio -c "Rogerio da Silva" -s /bin/bash -p $(openssl passwd 123456) -G GRP_SEC
 
-# Definir permissões
-chmod 777 /publico
-chmod 700 /adm /ven /sec
+#Permissoes
+sudo chmod 777 /publico
+sudo chown root:GRP_ADM /adm
+sudo chmod 770 /adm
+sudo chown root:GRP_VEN /ven
+sudo chmod 770 /ven
+sudo chown root:GRP_SEC /sec
+sudo chmod 770 /sec
 
-# Definir permissões para grupos específicos
-chmod 770 /adm
-chown :GRP_ADM /adm
 
-chmod 770 /ven
-chown :GRP_VEN /ven
-
-chmod 770 /sec
-chown :GRP_SEC /sec
-
-# Definir restrições de acesso usando chmod
-chmod 700 /publico
